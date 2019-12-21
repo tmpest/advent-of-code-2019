@@ -3,20 +3,19 @@ package common
 import "fmt"
 
 // ExecuteIntcode ...
-func ExecuteIntcode(intcodeInput *[]int) *[]int {
+func ExecuteIntcode(intcodeInput []int) []int {
 	index := 0
-	for true {
-		opcode := intcodeInput[index]
-		if opcode == 0 {
-			intcodeInput[intcodeInput[index + 3]] = intcodeInput[intcodeInput[index + 1]] + intcodeInput[intcodeInput[index + 2]]
-		} else if opcode == 1 {
-			intcodeInput[intcodeInput[index + 3]] = intcodeInput[intcodeInput[index + 1]] * intcodeInput[intcodeInput[index + 2]]
-		} else if opcode == 99 {
+	for index <= len(intcodeInput) {
+		switch opcode := intcodeInput[index]; opcode {
+		case 0:
+			intcodeInput[intcodeInput[index+3]] = intcodeInput[intcodeInput[index+1]] + intcodeInput[intcodeInput[index+2]]
+		case 1:
+			intcodeInput[intcodeInput[index+3]] = intcodeInput[intcodeInput[index+1]] * intcodeInput[intcodeInput[index+2]]
+		case 99:
 			return intcodeInput
-		} else {
+		default:
 			panic(fmt.Sprintf("Unknown Opcode: %+v", opcode))
 		}
 		index += 4
 	}
-	return nil
 }
